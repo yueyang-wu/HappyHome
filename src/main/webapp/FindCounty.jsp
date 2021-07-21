@@ -50,7 +50,21 @@
 			<td><c:out value="${housePrice.getCurrentPrice()}" /></td>
 			<td><c:out value="${housePriceForecast.getHomePriceForecast()}" /></td>
 			<td><c:out value="${report.getIndex()}" /></td>
-			<td><c:out value="${report.getRecommendation()}" /></td>
+			<td>
+			<c:choose>
+         		<c:when test = "${report.getIndex() > 2}">
+            		Highly Recommended.
+         		</c:when>
+         
+         		<c:when test = "${report.getIndex() < 2}">
+            		Not Recommended.
+         		</c:when>
+         
+         		<c:otherwise>
+            		Neutral.
+         		</c:otherwise>
+      		</c:choose>
+      		</td>
 			<td><a href="countydisasters?countyName=<c:out value="${county.getCountyName()}"/>&&state=<c:out value="${county.getState()}"/>">Disasters</a></td>
 		</tr>
 	</table>
