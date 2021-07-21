@@ -22,12 +22,18 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/findcounty")
 public class FindCounty extends HttpServlet {
 	protected CountyDao countyDao;
+	protected CountyHousePriceDao countyHousePriceDao;
+	protected CountyHousePriceForecastDao countyHousePriceForecastDao;
 	protected ReportDao reportDao;
+	protected FavoriteDao favoriteDao;
 	
 	@Override
 	public void init() throws ServletException {
 		countyDao = CountyDao.getInstance();
+		countyHousePriceDao = CountyHousePriceDao.getInstance();
+		countyHousePriceForecastDao = CountyHousePriceForecastDao.getInstance();
 		reportDao = ReportDao.getInstance();
+		favoriteDao = FavoriteDao.getInstance();
 	}
 	
 	@Override
@@ -74,7 +80,10 @@ public class FindCounty extends HttpServlet {
 		req.setAttribute("messages", messages);
 		
 		County county = null;
+		CountyHousePrice countyHousePrice = null;
+		CountyHousePriceForecast countyHousePriceForecast = null;
 		Report report = null;
+		List<Favorite> favorites = null;
 		
 		// Retrieve and validate county and state name
 		String countyName = req.getParameter("countyName");
@@ -86,7 +95,12 @@ public class FindCounty extends HttpServlet {
 			// retrieve County and store as a message
 			try {
 				county = countyDao.getCountyByCountyNameAndState(countyName, state);
+				countyHousePrice = countyHousePriceDao.getCountyHousePriceByFipsCountyCode(
+						county.getFipsCountyCode());
+				countyHousePriceForecast = countyHousePriceForecastDao.
+						getCountyHousePriceForecastByFipsCountyCode(county.getFipsCountyCode());
 				report = reportDao.getReportForCounty(county);
+				favorites = favoriteDao.getFavoritesForCounty(county);
 			} catch (SQLException e) {
 				e.printStackTrace();
 				throw new IOException(e);
@@ -94,7 +108,10 @@ public class FindCounty extends HttpServlet {
 			messages.put("success", "Displaying results for " + countyName + ", " + state);
 		}
 		req.setAttribute("county", county);
+		req.setAttribute("housePrice", countyHousePrice);
+		req.setAttribute("housePriceForecast", countyHousePriceForecast);
 		req.setAttribute("report", report);
+		req.setAttribute("popularity", favorites.size());
 		req.getRequestDispatcher("/FindCounty.jsp").forward(req, resp);
 	}
 }

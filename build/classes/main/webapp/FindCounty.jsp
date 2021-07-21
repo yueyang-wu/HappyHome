@@ -1,3 +1,4 @@
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -35,6 +36,8 @@
 			<th>CountyName</th>
 			<th>State</th>
 			<th>PopularityIndex</th>
+			<th>CurrentPrice</th>
+			<th>PriceForecast</th>
 			<th>RecommendationIndex</th>
 			<th>Recommendation</th>
 			<th>Disasters</th>
@@ -43,7 +46,9 @@
 			<td><c:out value="${county.getFipsCountyCode()}" /></td>
 			<td><c:out value="${county.getCountyName()}" /></td>
 			<td><c:out value="${county.getState()}" /></td>
-			<td><c:out value="${county.getPopularityIndex()}" /></td>
+			<td><c:out value="${popularity}" /></td>
+			<td><c:out value="${housePrice.getCurrentPrice()}" /></td>
+			<td><c:out value="${housePriceForecast.getHomePriceForecast()}" /></td>
 			<td><c:out value="${report.getIndex()}" /></td>
 			<td><c:out value="${report.getRecommendation()}" /></td>
 			<td><a href="countydisasters?countyName=<c:out value="${county.getCountyName()}"/>&&state=<c:out value="${county.getState()}"/>">Disasters</a></td>
