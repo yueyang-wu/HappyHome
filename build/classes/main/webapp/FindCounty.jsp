@@ -59,9 +59,13 @@
          		<c:when test = "${report.getIndex() < 2}">
             		Not Recommended.
          		</c:when>
+         		
+         		<c:when test = "${report.getIndex() == 2}">
+            		Neutral.
+         		</c:when>
          
          		<c:otherwise>
-            		Neutral.
+            		
          		</c:otherwise>
       		</c:choose>
       		</td>
