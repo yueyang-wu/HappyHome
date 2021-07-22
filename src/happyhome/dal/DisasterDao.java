@@ -11,6 +11,11 @@ import java.util.List;
 
 import happyhome.model.*;
 
+/**
+ * No update operation for Disaster and its child classes(i.g. Drought, Fire, Freezing...)
+ * because we will never update any information of a disaster happened in the past. 
+ */
+
 public class DisasterDao {
 	protected ConnectionManager connectionManager;
 	private static DisasterDao instance = null;

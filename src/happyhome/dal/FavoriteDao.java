@@ -2,6 +2,12 @@ package happyhome.dal;
 
 import java.sql.Connection;
 
+/**
+ * No update operation for Favorite
+ * because Favorite only has favoriteId, user, and county.
+ * It doesn't make sense to update any of them in FavoriteDao.
+ */
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
