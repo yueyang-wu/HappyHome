@@ -1,6 +1,7 @@
 package happyhome.dal;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -146,6 +147,27 @@ public class DisasterDao {
 		return disasters;
 	}
 	
-	// No delete operation is required because disasters would never be deleted
-	// from the database.
+	public Disaster delete(Disaster disaster) throws SQLException {
+		String deleteDisaster = "DELETE FROM Disaster WHERE DisasterId=?;";
+		Connection connection = null;
+		PreparedStatement deleteStmt = null;
+		try {
+			connection = connectionManager.getConnection();
+			deleteStmt = connection.prepareStatement(deleteDisaster);
+			deleteStmt.setInt(1, disaster.getDisasterId());
+			deleteStmt.executeUpdate();
+
+			return null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if(connection != null) {
+				connection.close();
+			}
+			if(deleteStmt != null) {
+				deleteStmt.close();
+			}
+		}
+	}
 }

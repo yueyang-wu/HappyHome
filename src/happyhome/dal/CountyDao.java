@@ -2,6 +2,7 @@ package happyhome.dal;
 
 import java.sql.Connection;
 
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -129,6 +130,53 @@ public class CountyDao {
 		return null;
 	}
 	
-	// No delete operation is required because counties would never be deleted
-	// from the database.
+	public County updatePopularityIndex(County county, int newPopularityIndex) throws SQLException {
+		String updateCounty = "UPDATE County SET PopularityIndex=? WHERE FipsCountyCode=?;";
+		Connection connection = null;
+		PreparedStatement updateStmt = null;
+		try {
+			connection = connectionManager.getConnection();
+			updateStmt = connection.prepareStatement(updateCounty);
+			updateStmt.setInt(1, newPopularityIndex);
+			updateStmt.setString(2, county.getFipsCountyCode());
+			updateStmt.executeUpdate();
+			
+			county.setPopularityIndex(newPopularityIndex);
+			return county;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if(connection != null) {
+				connection.close();
+			}
+			if(updateStmt != null) {
+				updateStmt.close();
+			}
+		}
+	}
+	
+	public County delete(County county) throws SQLException {
+		String deleteCounty = "DELETE FROM County WHERE FipsCountyCode=?;";
+		Connection connection = null;
+		PreparedStatement deleteStmt = null;
+		try {
+			connection = connectionManager.getConnection();
+			deleteStmt = connection.prepareStatement(deleteCounty);
+			deleteStmt.setString(1, county.getFipsCountyCode());
+			deleteStmt.executeUpdate();
+
+			return null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if(connection != null) {
+				connection.close();
+			}
+			if(deleteStmt != null) {
+				deleteStmt.close();
+			}
+		}
+	}
 }

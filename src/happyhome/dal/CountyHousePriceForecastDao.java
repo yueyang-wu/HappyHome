@@ -2,6 +2,7 @@ package happyhome.dal;
 
 import java.sql.Connection;
 
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,7 +23,6 @@ public class CountyHousePriceForecastDao extends CountyDao {
 		}
 		return instance;
 	}
-	
 	
 	public CountyHousePriceForecast create(CountyHousePriceForecast
 			countyHousePriceForecast) throws SQLException {
@@ -97,6 +97,56 @@ public class CountyHousePriceForecastDao extends CountyDao {
 			return null;
 	}
 	
-	// No delete operation is required because counties would never be deleted
-	// from the database.
+	public CountyHousePriceForecast updateHomePriceForecast(CountyHousePriceForecast
+			countyHousePriceForecast, double newHomePriceForecast) throws SQLException {
+		String updateCountyHousePriceForecast =
+				"UPDATE CountyHousePriceForecast SET HomePriceForecast=? WHERE FipsCountyCode=?;";
+		Connection connection = null;
+		PreparedStatement updateStmt = null;
+		try {
+			connection = connectionManager.getConnection();
+			updateStmt = connection.prepareStatement(updateCountyHousePriceForecast);
+			updateStmt.setDouble(1, newHomePriceForecast);
+			updateStmt.setString(2, countyHousePriceForecast.getFipsCountyCode());
+			updateStmt.executeUpdate();
+			
+			countyHousePriceForecast.setHomePriceForecast(newHomePriceForecast);
+			return countyHousePriceForecast;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if(connection != null) {
+				connection.close();
+			}
+			if(updateStmt != null) {
+				updateStmt.close();
+			}
+		}
+	}
+	
+	public CountyHousePriceForecast delete(CountyHousePriceForecast countyHousePriceForecast) throws SQLException {
+		String deleteCountyHousePriceForecast = "DELETE FROM CountyHousePriceForecast WHERE FipsCountyCode=?;";
+		Connection connection = null;
+		PreparedStatement deleteStmt = null;
+		try {
+			connection = connectionManager.getConnection();
+			deleteStmt = connection.prepareStatement(deleteCountyHousePriceForecast);
+			deleteStmt.setString(1, countyHousePriceForecast.getFipsCountyCode());
+			deleteStmt.executeUpdate();
+			super.delete(countyHousePriceForecast);
+
+			return null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if(connection != null) {
+				connection.close();
+			}
+			if(deleteStmt != null) {
+				deleteStmt.close();
+			}
+		}
+	}
 }

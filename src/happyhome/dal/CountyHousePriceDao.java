@@ -2,6 +2,7 @@ package happyhome.dal;
 
 import java.sql.Connection;
 
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,7 +23,6 @@ public class CountyHousePriceDao extends CountyDao {
 		}
 		return instance;
 	}
-	
 	
 	public CountyHousePrice create(CountyHousePrice countyHousePrice) 
 			throws SQLException {
@@ -96,6 +96,54 @@ public class CountyHousePriceDao extends CountyDao {
 			return null;
 	}
 	
-	// No delete operation is required because counties would never be deleted
-	// from the database.
+	public CountyHousePrice updateCurrentPrice(CountyHousePrice countyHousePrice, int newCurrentPrice) throws SQLException {
+		String updateCountyHousePrice = "UPDATE CountyHousePrice SET CurrentPrice=? WHERE FipsCountyCode=?;";
+		Connection connection = null;
+		PreparedStatement updateStmt = null;
+		try {
+			connection = connectionManager.getConnection();
+			updateStmt = connection.prepareStatement(updateCountyHousePrice);
+			updateStmt.setInt(1, newCurrentPrice);
+			updateStmt.setString(2, countyHousePrice.getFipsCountyCode());
+			updateStmt.executeUpdate();
+			
+			countyHousePrice.setCurrentPrice(newCurrentPrice);
+			return countyHousePrice;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if(connection != null) {
+				connection.close();
+			}
+			if(updateStmt != null) {
+				updateStmt.close();
+			}
+		}
+	}
+	
+	public CountyHousePrice delete(CountyHousePrice countyHousePrice) throws SQLException {
+		String deleteCountyHousePrice = "DELETE FROM CountyHousePrice WHERE FipsCountyCode=?;";
+		Connection connection = null;
+		PreparedStatement deleteStmt = null;
+		try {
+			connection = connectionManager.getConnection();
+			deleteStmt = connection.prepareStatement(deleteCountyHousePrice);
+			deleteStmt.setString(1, countyHousePrice.getFipsCountyCode());
+			deleteStmt.executeUpdate();
+			super.delete(countyHousePrice);
+
+			return null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			if(connection != null) {
+				connection.close();
+			}
+			if(deleteStmt != null) {
+				deleteStmt.close();
+			}
+		}
+	}
 }

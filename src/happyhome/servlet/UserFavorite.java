@@ -35,30 +35,25 @@ public class UserFavorite extends HttpServlet {
 		
         List<Favorite> favorites = new ArrayList<Favorite>();
         
-		// Retrieve favorite depending on valid PostId or UserName.
+		// Retrieve favorite depending on valid UserName.
         String userName = req.getParameter("UserName");
-        String fipsCountyCode = req.getParameter("FipsCountyCode");
-        
+//        String fipsCountyCode = req.getParameter("FipsCountyCode");
+        System.out.println("UserFavorite: " + userName);
         try {
 	        if (userName != null && !userName.trim().isEmpty()) {
-	        	// If the postid param is provided then ignore the username param.
 	        	User user = new User(userName);
-	        	favorite = favoriteDao.getFavoriteForUser(user);
+	        	favorites = favoriteDao.getFavoritesForUser(user);
+	        	
 	        	messages.put("title", "Favorite for UserName " + userName);
-	        } else if (fipsCountyCode != null && !fipsCountyCode.trim().isEmpty()) {
-	        	// If postid is invalid, then use the username param.
-	        	County county = new County(fipsCountyCode);
-	        	favorite = favoriteDao.getFavoritesForCounty(county);
-	        	messages.put("title", "Favorite for fipsCountyCode " + fipsCountyCode);
 	        } else {
-	        	messages.put("title", "Invalid UserName and FipsCountyCode.");
+	        	messages.put("title", "Invalid UserName.");
 	        }
         } catch (SQLException e) {
 			e.printStackTrace();
 			throw new IOException(e);
         }
-        
-        req.setAttribute("favorite", favorite);
-        req.getRequestDispatcher("/Favorites.jsp").forward(req, resp);
+        System.out.println("UserFavorite: " + favorites);
+        req.setAttribute("favorites", favorites);
+        req.getRequestDispatcher("/UserFavorite.jsp").forward(req, resp);
 	}
 }

@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Favorite</title>
+<title>Favorites</title>
 </head>
 <body>
 	<h1>${messages.title}</h1>
@@ -17,12 +17,14 @@
                 <th>FavoriteId</th>
                 <th>UserName</th>
                 <th>FipsCountyCode</th>
+                <th>State</th>
+                <th>County</th>
             </tr>
-            <c:forEach items="${Favorite}" var="Favorite" >
+            <c:forEach items="${Favorites}" var="Favorite" >
                 <tr>
                     <td><c:out value="${favorite.getFavoriteId()}" /></td>
-                    <td><c:out value="${favorite.getUser().getUserId()}" /></td>
                     <td><c:out value="${favorite.getUser().getUserName()}" /></td>
+                    <td><c:out value="${favorite.getCounty().getFipsCountyCode()}" /></td>
                     <td><c:out value="${favorite.getCounty().getState()}" /></td>
                     <td><c:out value="${favorite.getCounty().getCountyName()}" /></td>
                 </tr>
