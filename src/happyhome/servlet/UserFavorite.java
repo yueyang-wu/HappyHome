@@ -36,9 +36,7 @@ public class UserFavorite extends HttpServlet {
         List<Favorite> favorites = new ArrayList<Favorite>();
         
 		// Retrieve favorite depending on valid UserName.
-        String userName = req.getParameter("UserName");
-//        String fipsCountyCode = req.getParameter("FipsCountyCode");
-        System.out.println("UserFavorite: " + userName);
+        String userName = req.getParameter("username");
         try {
 	        if (userName != null && !userName.trim().isEmpty()) {
 	        	User user = new User(userName);
@@ -52,7 +50,6 @@ public class UserFavorite extends HttpServlet {
 			e.printStackTrace();
 			throw new IOException(e);
         }
-        System.out.println("UserFavorite: " + favorites);
         req.setAttribute("favorites", favorites);
         req.getRequestDispatcher("/UserFavorite.jsp").forward(req, resp);
 	}

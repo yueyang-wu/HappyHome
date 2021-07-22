@@ -19,14 +19,16 @@
                 <th>FipsCountyCode</th>
                 <th>State</th>
                 <th>County</th>
+                <th>Delete Favorite</th>
             </tr>
-            <c:forEach items="${Favorites}" var="Favorite" >
+            <c:forEach items="${favorites}" var="favorite" >
                 <tr>
                     <td><c:out value="${favorite.getFavoriteId()}" /></td>
                     <td><c:out value="${favorite.getUser().getUserName()}" /></td>
                     <td><c:out value="${favorite.getCounty().getFipsCountyCode()}" /></td>
                     <td><c:out value="${favorite.getCounty().getState()}" /></td>
                     <td><c:out value="${favorite.getCounty().getCountyName()}" /></td>
+                    <td><a href="favoritedelete?favoriteid=<c:out value="${favorite.getFavoriteId()}"/>">Delete</a></td>
                 </tr>
             </c:forEach>
        </table>
