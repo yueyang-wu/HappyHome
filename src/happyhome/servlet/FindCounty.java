@@ -1,11 +1,11 @@
 package happyhome.servlet;
 
 import happyhome.dal.*;
+
 import happyhome.model.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,12 +39,11 @@ public class FindCounty extends HttpServlet {
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 		throws ServletException, IOException {
-		// Map for sorting messages
+		// Map for storing messages
 		Map<String, String> messages = new HashMap<String, String>();
 		req.setAttribute("messages", messages);
 		
 		County county = null;
-//		Report report = null;
 		
 		// Retrieve and validate county and state name
 		String countyName = req.getParameter("countyName");
@@ -53,29 +52,27 @@ public class FindCounty extends HttpServlet {
 				|| state == null || state.trim().isEmpty()) {
 			messages.put("success", "Please enter valid county and state name.");
 		} else {
-			// retrieve County and store as a message
+			// Retrieve county and store as a message
 			try {
 				county = countyDao.getCountyByCountyNameAndState(countyName, state);
-//				report = reportDao.getReportForCounty(county);
 			} catch (SQLException e) {
 				e.printStackTrace();
 				throw new IOException(e);
 			}
 			messages.put("success", "Displaying results for " + countyName + ", " + state);
-			// save the previous search term so it can be used as the default
+			// Save the previous search term so it can be used as the default
 			// in the input box when rendering FindCounty.jsp
 			messages.put("previousCountyName", countyName);
 			messages.put("previousState", state);
 		}
 		req.setAttribute("county", county);
-//		req.setAttribute("report", report);
 		req.getRequestDispatcher("/FindCounty.jsp").forward(req, resp);
 	}
 	
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 		throws ServletException, IOException {
-		// Map for sorting messages
+		// Map for storing messages
 		Map<String, String> messages = new HashMap<String, String>();
 		req.setAttribute("messages", messages);
 		
@@ -92,7 +89,7 @@ public class FindCounty extends HttpServlet {
 				|| state == null || state.trim().isEmpty()) {
 			messages.put("success", "Please enter valid county and state name.");
 		} else {
-			// retrieve County and store as a message
+			// Retrieve county and store as a message
 			try {
 				county = countyDao.getCountyByCountyNameAndState(countyName, state);
 				countyHousePrice = countyHousePriceDao.getCountyHousePriceByFipsCountyCode(

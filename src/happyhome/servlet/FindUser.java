@@ -41,7 +41,6 @@ public class FindUser extends HttpServlet {
         if (userName == null || userName.trim().isEmpty()) {
             messages.put("success", "Please enter a valid name.");
         } else {
-        	// Retrieve BlogUsers, and store as a message.
         	try {
             	user = userDao.getUserByUserName(userName);
             } catch (SQLException e) {

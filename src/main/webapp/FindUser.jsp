@@ -35,7 +35,7 @@
                 <th>Email</th>
                 <th>CurrentZip</th>
                 <th>Favorite</th>
-                <th>Update ZipCope</th>
+                <th>Update ZipCode</th>
                 <th>Delete User</th>
             </tr>
             <tr>

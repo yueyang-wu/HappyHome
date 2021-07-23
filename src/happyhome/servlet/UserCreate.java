@@ -44,12 +44,6 @@ public class UserCreate extends HttpServlet {
         // Map for storing messages.
         Map<String, String> messages = new HashMap<String, String>();
         req.setAttribute("messages", messages);
-        
-//        User userName = null;
-//        User password = null;
-//        User firstName = null;
-//        User lastName = null;
-       
 
         // Retrieve and validate name.
         String userName = req.getParameter("UserName");
@@ -57,7 +51,6 @@ public class UserCreate extends HttpServlet {
             messages.put("success", "Invalid UserName");
         } else {
         	// Create the User.
-//            String userName = req.getParameter("UserName");
             String password = req.getParameter("Password");
         	String firstName = req.getParameter("FirstName");
         	String lastName = req.getParameter("LastName");
@@ -77,4 +70,3 @@ public class UserCreate extends HttpServlet {
         req.getRequestDispatcher("/UserCreate.jsp").forward(req, resp);
     }
 }
-

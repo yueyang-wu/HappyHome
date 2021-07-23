@@ -14,9 +14,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * FindCounty is the primary entry point into the application.
- */
 @WebServlet("/userupdate")
 public class UserUpdate extends HttpServlet {
 	protected UserDao userDao;
@@ -71,12 +68,8 @@ public class UserUpdate extends HttpServlet {
         			messages.put("success", "UserName does not exist. No update to perform.");
         		} else {
         			Integer newZipcode = Integer.parseInt(req.getParameter("newZipcode"));
-        			if (newZipcode == null) {
-        	            messages.put("success", "Please enter a valid Zipcode.");
-        	        } else {
-        	        	user = userDao.updateCurrentZip(user, newZipcode);
-        	        	messages.put("success", "Successfully updated " + userName);
-        	        }
+        	        user = userDao.updateCurrentZip(user, newZipcode);
+        	        messages.put("success", "Successfully updated " + userName);
         		}
         		req.setAttribute("user", user);
         	} catch (SQLException e) {
