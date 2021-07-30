@@ -8,41 +8,82 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link href="css/bootstrap.min.css" rel="stylesheet">
 <title>Create a User</title>
 </head>
 <body>
-	<h1>Create a User</h1>
-	<form action="usercreate" method="post">
-		<p>
-			<label for="UserName">UserName</label>
-			<input id="UserName" name="UserName" value="">
-		</p>
-		<p>
-			<label for="Password">Password</label>
-			<input id="Password" name="Password" value="">
-		</p>
-		<p>
-			<label for="FirstName">FirstName</label>
-			<input id="FirstName" name="FirstName" value="">
-		</p>
-		<p>
-			<label for="LastName">LastName</label>
-			<input id="LastName" name="LastName" value="">
-		</p>
-		<p>
-		    <label for="EMAIL">Email</label>
-		    <input id="EMAIL" name="EMAIL" value="">
-		<p>
-			<label for="CurrentZip">CurrentZip</label>
-			<input id="CurrentZip" name="CurrentZip" value="">
-		</p>
-		<p>
-			<input type="submit">
-		</p>
-	</form>
+	<jsp:include page="/Navbar.jsp" />
 	<br/><br/>
-	<p>
-		<span id="successMessage"><b>${messages.success}</b></span>
-	</p>
+
+	<div class="col d-flex justify-content-center text-center">
+		<div class="card border-success mb-3">
+		<div class="card-header bg-transparent border-success">
+			<p class="display-5">Create a user</p>
+		</div>
+		<div class="card-body">
+			<form action="usercreate" method="post">
+				<p>
+					<div class="row g-2 justify-content-md-center">
+						<div class="col-md-6">
+					    	<div class="form-floating">
+					      		<input type="text" class="form-control" id="username" name="username" required>
+					      		<label for="username">Username</label>
+					    	</div>
+					  	</div>
+					  	<div class="col-md-6">
+					    	<div class="form-floating">
+					      		<input type="text" class="form-control" id="password" name="password" required>
+					      		<label for="password">Password</label>
+					    	</div>
+					  	</div>
+					</div>
+				</p>
+				<p>
+					<div class="row g-2 justify-content-md-center">
+						<div class="col-md-6">
+					    	<div class="form-floating">
+					      		<input type="text" class="form-control" id="firstname" name="firstname" required>
+					      		<label for="firstname">First Name</label>
+					    	</div>
+					  	</div>
+					  	<div class="col-md-6">
+					    	<div class="form-floating">
+					      		<input type="text" class="form-control" id="lastname" name="lastname" required>
+					      		<label for="lastname">Last Name</label>
+					    	</div>
+					  	</div>
+					</div>
+				</p>
+				<p>
+					<div class="row g-2 justify-content-md-center">
+						<div class="col-md-6">
+					    	<div class="form-floating">
+					      		<input type="text" class="form-control" id="email" name="email" required>
+					      		<label for="email">Email</label>
+					    	</div>
+					  	</div>
+					  	<div class="col-md-6">
+					    	<div class="form-floating">
+					      		<input type="text" class="form-control" id="currentzip" name="currentzip">
+					      		<label for="currentzip">Current ZIP Code</label>
+					    	</div>
+					  	</div>
+					</div>
+				</p>
+				<p>
+		 			<input type="submit" class="btn btn-outline-success" value="Submit"/>
+				</p>
+			</form>
+			<p><em>
+				<div class="alert-success d-inline-block" role="alert">
+					<span id="successMessage"><b>${messages.success}</b></span>
+				</div>
+			</em></p>
+		</div>
+		</div>
+	</div>
+	<!-- </figure> -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 </body>
 </html>

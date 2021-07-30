@@ -1,4 +1,3 @@
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -9,68 +8,116 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link href="css/bootstrap.min.css" rel="stylesheet">
 <title>Find a County</title>
 </head>
 <body>
-	<form action="findcounty" method="post">
-		<h1>Search for a County by CountyName and State</h1>
-		<p>
-			<label for="countyName">CountyName</label>
-			<input id="countyName" name="countyName" value="${fn:escapeXml(param.countyName)}">
-			<label for="state">State</label>
-			<input id="state" name="state" value="${fn:escapeXml(param.state)}">
-		</p>
-		<p>
-			<input type="submit">
-			<br/><br/><br/>
-			<span id="successMessage"><b>${messages.success}</b></span>
-		</p>
-	</form>
-	<br/>
-	<div id="findUser"><a href="finduser">Find A User</a></div>
-	<br/>
-	<h1>Matching County</h1>
-	<table border="1">
-		<tr>
-			<th>FipsCountyCode</th>
-			<th>CountyName</th>
-			<th>State</th>
-			<th>PopularityIndex</th>
-			<th>CurrentPrice</th>
-			<th>PriceForecast</th>
-			<th>RecommendationIndex</th>
-			<th>Recommendation</th>
-			<th>Disasters</th>
-		</tr>
-		<tr>
-			<td><c:out value="${county.getFipsCountyCode()}" /></td>
-			<td><c:out value="${county.getCountyName()}" /></td>
-			<td><c:out value="${county.getState()}" /></td>
-			<td><c:out value="${popularity}" /></td>
-			<td><c:out value="${housePrice.getCurrentPrice()}" /></td>
-			<td><c:out value="${housePriceForecast.getHomePriceForecast()}" /></td>
-			<td><c:out value="${report.getIndex()}" /></td>
-			<td>
-			<c:choose>
-         		<c:when test = "${report.getIndex() > 2}">
-            		Highly Recommended.
-         		</c:when>
-         
-         		<c:when test = "${report.getIndex() < 2}">
-            		Not Recommended.
-         		</c:when>
-         		
-         		<c:when test = "${report.getIndex() == 2}">
-            		Neutral.
-         		</c:when>
-         
-         		<c:otherwise>
-            		
-         		</c:otherwise>
-      		</c:choose>
-      		</td>
-			<td><a href="countydisasters?countyName=<c:out value="${county.getCountyName()}"/>&&state=<c:out value="${county.getState()}"/>">Disasters</a></td>
-		</tr>
-	</table>
+	<jsp:include page="/Navbar.jsp" />
+	<br/><br/><br/><br/><br/><br/><br/>
+    
+	<style>
+		body {
+		  background-image: url("background.jpg");
+		  height: 100%;
+		  background-position: relative;
+		  background-repeat: no-repeat;
+		  background-size: cover;
+		}
+	</style>
+		
+	<div class="col d-flex justify-content-center text-center">
+		<div class="card-transparent border-primary mb-3">
+		<div class="card-header special-card border-success" style="background-color: rgba(245, 245, 245, 0.9);">
+			<p class="display-4">Search for a county</p>
+		</div>
+		<div class="card-body special-card" style="background-color: rgba(245, 245, 245, 0.9);">
+			<form action="findcounty" method="post">
+				<p>
+					<div class="row g-2 justify-content-md-center">
+						<div class="col-md-6">
+					    	<div class="form-floating">
+					      		<input type="text" class="form-control" id="countyname" name="countyname" value="${fn:escapeXml(param.countyname)}" required>
+					      		<label for="countyname">County Name</label>
+					    	</div>
+					  	</div>
+					  	<div class="col-md-4">
+					    	<div class="form-floating">
+					      		<select class="form-select" id="state" name="state" value="${fn:escapeXml(param.state)}" required>
+					        		<option selected></option>
+					        		<option value="AL">AL</option>
+					        		<option value="AK">AK</option>
+					        		<option value="AS">AS</option>
+					        		<option value="AZ">AZ</option>
+					        		<option value="AR">AR</option>
+					        		<option value="CA">CA</option>
+					        		<option value="CO">CO</option>
+					        		<option value="CT">CT</option>
+					        		<option value="DE">DE</option>
+					        		<option value="DC">DC</option>
+					        		<option value="FL">FL</option>
+					        		<option value="GA">GA</option>
+					        		<option value="HI">HI</option>
+					        		<option value="ID">ID</option>
+					        		<option value="IL">IL</option>
+					        		<option value="IN">IN</option>
+					        		<option value="IA">IA</option>
+					        		<option value="KS">KS</option>
+					        		<option value="KY">KY</option>
+					        		<option value="LA">LA</option>
+					        		<option value="ME">ME</option>
+					        		<option value="MD">MD</option>
+					        		<option value="MA">MA</option>
+					        		<option value="MI">MI</option>
+					        		<option value="MN">MN</option>
+					        		<option value="MS">MS</option>
+					        		<option value="MO">MO</option>
+					        		<option value="MT">MT</option>
+					        		<option value="NE">NE</option>
+					        		<option value="NV">NV</option>
+					        		<option value="NH">NH</option>
+					        		<option value="NJ">NJ</option>
+					        		<option value="NM">NM</option>
+					        		<option value="NY">NY</option>
+					        		<option value="NC">NC</option>
+					        		<option value="ND">ND</option>
+					        		<option value="OH">OH</option>
+					        		<option value="OK">OK</option>
+					        		<option value="OR">OR</option>
+					        		<option value="PA">PA</option>
+					        		<option value="PR">PR</option>
+					        		<option value="RI">RI</option>
+					        		<option value="SC">SC</option>
+					        		<option value="SD">SD</option>
+					        		<option value="TN">TN</option>
+					        		<option value="TX">TX</option>
+					        		<option value="UT">UT</option>
+					        		<option value="VT">VT</option>
+					        		<option value="VA">VA</option>
+					        		<option value="VI">VI</option>
+					        		<option value="WA">WA</option>
+					        		<option value="WV">WV</option>
+					        		<option value="WI">WI</option>
+					        		<option value="WY">WY</option>
+					      		</select>
+					      		<label for="state">State/Territory</label>
+					    	</div>
+					  	</div>
+					</div>
+				</p>
+				<p>
+		 			<input type="submit" class="btn btn-outline-success" value="Submit"/>
+				</p>
+			</form>
+ 			<p><em>
+				<div class="alert-success" role="alert">
+				<span id="successMessage"><b>${messages.success}</b></span>
+				</div>
+			</em></p>
+		</div>
+		</div>
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 </body>
 </html>

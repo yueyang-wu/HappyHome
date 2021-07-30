@@ -28,38 +28,31 @@ public class UserDelete extends HttpServlet {
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		// Map for storing messages.
         Map<String, String> messages = new HashMap<String, String>();
         req.setAttribute("messages", messages);
-        // Provide a title and render the JSP.
-        messages.put("title", "Delete User");        
         req.getRequestDispatcher("/UserDelete.jsp").forward(req, resp);
 	}
 	
 	@Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp)
     		throws ServletException, IOException {
-        // Map for storing messages.
         Map<String, String> messages = new HashMap<String, String>();
         req.setAttribute("messages", messages);
 
-        // Retrieve and validate name.
-        String userName = req.getParameter("UserName");
+        String userName = req.getParameter("username");
         if (userName == null || userName.trim().isEmpty()) {
-            messages.put("title", "Invalid UserName");
+            messages.put("success", "Please delete a valid user.");
             messages.put("disableSubmit", "true");
         } else {
-        	// Delete the User.
 	        User user = new User(userName);
 	        try {
 	        	user = userDao.delete(user);
-	        	// Update the message.
 		        if (user == null) {
-		            messages.put("title", "Successfully deleted " + userName);
+		            messages.put("success", "Successfully deleted " + userName + ".");
 		            messages.put("disableSubmit", "true");
 		        } else {
-		        	messages.put("title", "Failed to delete " + userName);
-		        	messages.put("disableSubmit", "false");
+		        	messages.put("success", "Failed to delete " + userName + ".");
+		        	messages.put("disableSubmit", "true");
 		        }
 	        } catch (SQLException e) {
 				e.printStackTrace();

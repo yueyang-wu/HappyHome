@@ -8,46 +8,48 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link href="css/bootstrap.min.css" rel="stylesheet">
 <title>Find a User</title>
 </head>
 <body>
-	<form action="finduser" method="post">
-		<h1>Search for a User by UserName</h1>
-		<p>
-			<label for="username">UserName</label>
-			<input id="username" name="username" value="${fn:escapeXml(param.username)}">
-		</p>
-		<p>
-			<input type="submit">
-			<br/><br/><br/>
-			<span id="successMessage"><b>${messages.success}</b></span>
-		</p>
-	</form>
-	<br/>
-	<div id="userCreate"><a href="usercreate">Create A User</a></div>
-	<br/>
-	<h1>Matching User</h1>
-        <table border="1">
-            <tr>
-                <th>UserName</th>
-                <th>FirstName</th>
-                <th>LastName</th>
-                <th>Email</th>
-                <th>CurrentZip</th>
-                <th>Favorite</th>
-                <th>Update ZipCode</th>
-                <th>Delete User</th>
-            </tr>
-            <tr>
-			<td><c:out value="${user.getUserName()}" /></td>
-			<td><c:out value="${user.getFirstName()}" /></td>
-			<td><c:out value="${user.getLastName()}" /></td>
-			<td><c:out value="${user.getEmail()}" /></td>
-			<td><c:out value="${user.getCurrentZip()}" /></td>
-			<td><a href="userfavorite?username=<c:out value="${user.getUserName()}"/>">Favorite</a></td>
-			<td><a href="userupdate?username=<c:out value="${user.getUserName()}"/>">Update</a></td>
-			<td><a href="userdelete?username=<c:out value="${user.getUserName()}"/>">Delete</a></td>
-		</tr>
-       </table>
+	<jsp:include page="/Navbar.jsp" />
+	<br/><br/>
+
+	<div class="col d-flex justify-content-center text-center">
+		<div class="card border-success mb-3">
+		<div class="card-header bg-transparent border-success">
+			<p class="display-5">Search for a user</p>
+		</div>
+		<div class="card-body">
+			<form action="finduser" method="post">
+				<p>
+					<div class="row g-2 justify-content-md-center">
+						<div class="col-md-6">
+					    	<div class="form-floating">
+					      		<input type="text" class="form-control" id="username" name="username" value="${fn:escapeXml(param.username)}" required>
+					      		<label for="username">Username</label>
+					    	</div>
+					  	</div>
+					</div>
+				</p>
+				<p>
+					<input type="submit" class="btn btn-outline-success" value="Submit"/>
+				</p>
+			</form>
+			<p><em>
+				<div class="alert-success" role="alert">
+					<span id="successMessage"><b>${messages.success}</b></span>
+				</div>
+			</em></p>
+			<br/>
+			<div class="card-footer bg-transparent border-success">
+				<div id="userCreate"><a href="usercreate">Create a user</a></div>
+			</div>
+		</div>
+		</div>
+	</div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 </body>
 </html>

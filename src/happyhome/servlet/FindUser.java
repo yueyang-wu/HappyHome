@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/finduser")
 public class FindUser extends HttpServlet {
-	
 	protected UserDao userDao;
 	
 	@Override
@@ -29,17 +28,13 @@ public class FindUser extends HttpServlet {
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		// Map for storing messages.
         Map<String, String> messages = new HashMap<String, String>();
         req.setAttribute("messages", messages);
         
         User user = null;
         
-        // Retrieve and validate name.
-        // username is retrieved from the URL query string.
         String userName = req.getParameter("username");
         if (userName == null || userName.trim().isEmpty()) {
-            messages.put("success", "Please enter a valid name.");
         } else {
         	try {
             	user = userDao.getUserByUserName(userName);
@@ -47,7 +42,6 @@ public class FindUser extends HttpServlet {
     			e.printStackTrace();
     			throw new IOException(e);
             }
-        	messages.put("success", "Displaying results for " + userName);
         	// Save the previous search term, so it can be used as the default
         	// in the input box when rendering FindUser.jsp.
         	messages.put("previousUserName", userName);
@@ -60,7 +54,6 @@ public class FindUser extends HttpServlet {
 	@Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp)
     		throws ServletException, IOException {
-        // Map for storing messages.
         Map<String, String> messages = new HashMap<String, String>();
         req.setAttribute("messages", messages);
 
@@ -68,19 +61,21 @@ public class FindUser extends HttpServlet {
         
         String userName = req.getParameter("username");
         if (userName == null || userName.trim().isEmpty()) {
-            messages.put("success", "Please enter a valid name.");
+            messages.put("success", "Please enter a valid username.");
         } else {
-        	// Retrieve User, and store as a message.
         	try {
             	user = userDao.getUserByUserName(userName);
             } catch (SQLException e) {
     			e.printStackTrace();
     			throw new IOException(e);
             }
-        	messages.put("success", "Displaying results for " + userName);
         }
-        req.setAttribute("user", user);
         
-        req.getRequestDispatcher("/FindUser.jsp").forward(req, resp);
+        if (user == null) {
+        	messages.put("success", "Please enter a valid username.");
+        	req.getRequestDispatcher("/FindUser.jsp").forward(req, resp);
+        } else {
+			resp.sendRedirect("matchinguser?username="+user.getUserName());
+        }
     }
 }

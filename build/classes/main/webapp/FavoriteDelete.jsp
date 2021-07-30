@@ -8,25 +8,34 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link href="css/bootstrap.min.css" rel="stylesheet">
 <title>Delete a Favorite</title>
 </head>
 <body>
-	<h1>${messages.title}</h1>
+	<jsp:include page="/Navbar.jsp" />
+	<br/><br/>
+
+	<figure class="text-center">
 	<form action="favoritedelete" method="post">
-	<h1>Delete a Favorite by FavoriteId</h1>
-		<p>
+		<p class="lead">
 			<div <c:if test="${messages.disableSubmit}">style="display:none"</c:if>>
-				<label for="favoriteid">FavoriteId</label>
-				<input id="favoriteid" name="favoriteid" value="${fn:escapeXml(param.favoriteid)}">
+				Delete favorite?
 			</div>
 		</p>
 		<p>
 			<span id="submitButton" <c:if test="${messages.disableSubmit}">style="display:none"</c:if>>
-			<input type="submit">
+				<input type="hidden" name="favoriteid" value="${param.favoriteid}"/>
+				<input type="submit" class="btn btn-outline-success" value="Submit"/>
 			</span>
 		</p>
+		<p><em>
+			<div class="alert-success d-inline-block" role="alert">
+				<span id="successMessage"><b>${messages.success}</b></span>
+			</div>
+		</em></p>
 	</form>
-	<br/><br/>
-	
+	</figure>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 </body>
 </html>

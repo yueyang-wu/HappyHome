@@ -2,12 +2,12 @@ package happyhome.servlet;
 
 import happyhome.dal.*;
 
+
 import happyhome.model.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.annotation.*;
@@ -22,49 +22,34 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/findcounty")
 public class FindCounty extends HttpServlet {
 	protected CountyDao countyDao;
-	protected CountyHousePriceDao countyHousePriceDao;
-	protected CountyHousePriceForecastDao countyHousePriceForecastDao;
-	protected ReportDao reportDao;
-	protected FavoriteDao favoriteDao;
 	
 	@Override
 	public void init() throws ServletException {
 		countyDao = CountyDao.getInstance();
-		countyHousePriceDao = CountyHousePriceDao.getInstance();
-		countyHousePriceForecastDao = CountyHousePriceForecastDao.getInstance();
-		reportDao = ReportDao.getInstance();
-		favoriteDao = FavoriteDao.getInstance();
 	}
 	
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 		throws ServletException, IOException {
-		// Map for storing messages
 		Map<String, String> messages = new HashMap<String, String>();
 		req.setAttribute("messages", messages);
 		
 		County county = null;
 		
-		// Retrieve and validate county and state name
-		String countyName = req.getParameter("countyName");
+		String countyName = req.getParameter("countyname");
 		String state = req.getParameter("state");
-		if (countyName == null || countyName.trim().isEmpty() 
-				|| state == null || state.trim().isEmpty()) {
-			messages.put("success", "Please enter valid county and state name.");
-		} else {
-			// Retrieve county and store as a message
-			try {
-				county = countyDao.getCountyByCountyNameAndState(countyName, state);
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw new IOException(e);
-			}
-			messages.put("success", "Displaying results for " + countyName + ", " + state);
-			// Save the previous search term so it can be used as the default
-			// in the input box when rendering FindCounty.jsp
-			messages.put("previousCountyName", countyName);
-			messages.put("previousState", state);
+
+		try {
+			county = countyDao.getCountyByCountyNameAndState(countyName, state);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new IOException(e);
 		}
+		// Save the previous search term so it can be used as the default
+		// in the input box when rendering FindCounty.jsp
+		messages.put("previousCountyName", countyName);
+		messages.put("previousState", state);
+		
 		req.setAttribute("county", county);
 		req.getRequestDispatcher("/FindCounty.jsp").forward(req, resp);
 	}
@@ -72,43 +57,30 @@ public class FindCounty extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 		throws ServletException, IOException {
-		// Map for storing messages
 		Map<String, String> messages = new HashMap<String, String>();
 		req.setAttribute("messages", messages);
 		
 		County county = null;
-		CountyHousePrice countyHousePrice = null;
-		CountyHousePriceForecast countyHousePriceForecast = null;
-		Report report = null;
-		List<Favorite> favorites = null;
 		
-		// Retrieve and validate county and state name
-		String countyName = req.getParameter("countyName");
+		String countyName = req.getParameter("countyname");
 		String state = req.getParameter("state");
 		if (countyName == null || countyName.trim().isEmpty() 
 				|| state == null || state.trim().isEmpty()) {
-			messages.put("success", "Please enter valid county and state name.");
+			messages.put("success", "Please enter a valid county name and state/territory.");
 		} else {
-			// Retrieve county and store as a message
 			try {
 				county = countyDao.getCountyByCountyNameAndState(countyName, state);
-				countyHousePrice = countyHousePriceDao.getCountyHousePriceByFipsCountyCode(
-						county.getFipsCountyCode());
-				countyHousePriceForecast = countyHousePriceForecastDao.
-						getCountyHousePriceForecastByFipsCountyCode(county.getFipsCountyCode());
-				report = reportDao.getReportForCounty(county);
-				favorites = favoriteDao.getFavoritesForCounty(county);
 			} catch (SQLException e) {
 				e.printStackTrace();
 				throw new IOException(e);
 			}
-			messages.put("success", "Displaying results for " + countyName + ", " + state);
 		}
-		req.setAttribute("county", county);
-		req.setAttribute("housePrice", countyHousePrice);
-		req.setAttribute("housePriceForecast", countyHousePriceForecast);
-		req.setAttribute("report", report);
-		req.setAttribute("popularity", favorites.size());
-		req.getRequestDispatcher("/FindCounty.jsp").forward(req, resp);
+		
+		if (county == null) {
+			messages.put("success", "Please enter a valid county name and state/territory.");
+            req.getRequestDispatcher("/FindCounty.jsp").forward(req, resp);
+		} else {
+			resp.sendRedirect("matchingcounty?countyname="+county.getCountyName()+"&state="+county.getState());
+		}
 	}
 }

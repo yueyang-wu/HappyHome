@@ -8,26 +8,40 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link href="css/bootstrap.min.css" rel="stylesheet">
 <title>Update a User</title>
 </head>
 <body>
-	<h1>Update User</h1>
+	<jsp:include page="/Navbar.jsp" />
+	<br/><br/>
+
+	<figure class="text-center">
 	<form action="userupdate" method="post">
-		<p>
-			<label for="username">UserName</label>
-			<input id="username" name="username" value="${fn:escapeXml(param.username)}">
+		<p class="lead">
+			Update ${param.username}:
 		</p>
 		<p>
-			<label for="newZipcode">New Zipcode</label>
-			<input id="newZipcode" name="newZipcode" value="">
+			<input type="hidden" name="username" value="${param.username}"/>
+			<div class="row g-2 justify-content-md-center">
+				<div class="col-md-2">
+			    	<div class="form-floating">
+			      		<input type="text" class="form-control" id="newzipcode" name="newzipcode" value="" required>
+			      		<label for="newzipcode">New ZIP Code</label>
+			    	</div>
+			  	</div>
+			</div>
 		</p>
 		<p>
-			<input type="submit">
+			<input type="submit" class="btn btn-outline-success" value="Submit"/>
 		</p>
 	</form>
-	<br/><br/>
-	<p>
-		<span id="successMessage"><b>${messages.success}</b></span>
-	</p>
+	<p><em>
+		<div class="alert-success d-inline-block" role="alert">
+			<span id="successMessage"><b>${messages.success}</b></span>
+		</div>
+	</em></p>
+	</figure>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 </body>
 </html>

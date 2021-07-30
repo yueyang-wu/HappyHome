@@ -1,6 +1,7 @@
 package happyhome.servlet;
 
 import happyhome.dal.*;
+
 import happyhome.model.*;
 
 import java.io.IOException;
@@ -28,37 +29,31 @@ public class FavoriteDelete extends HttpServlet {
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		// Map for storing messages.
         Map<String, String> messages = new HashMap<String, String>();
         req.setAttribute("messages", messages);
-        // Provide a title and render the JSP.
-        messages.put("title", "Delete Favorite");        
         req.getRequestDispatcher("/FavoriteDelete.jsp").forward(req, resp);
 	}
 	
 	@Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp)
     		throws ServletException, IOException {
-        // Map for storing messages.
         Map<String, String> messages = new HashMap<String, String>();
         req.setAttribute("messages", messages);
 
-        // Retrieve and validate name.
         String favoriteId = req.getParameter("favoriteid");
         if (favoriteId == null || favoriteId.trim().isEmpty()) {
-            messages.put("title", "Invalid FavoriteId");
+            messages.put("success", "Please delete a valid favorite.");
             messages.put("disableSubmit", "true");
         } else {
 	        Favorite favorite = new Favorite(Integer.parseInt(favoriteId));
 	        try {
 	        	favorite = favoriteDao.delete(favorite);
-	        	// Update the message.
 		        if (favorite == null) {
-		            messages.put("title", "Successfully deleted " + favoriteId);
+		            messages.put("success", "Successfully deleted.");
 		            messages.put("disableSubmit", "true");
 		        } else {
-		        	messages.put("title", "Failed to delete " + favoriteId);
-		        	messages.put("disableSubmit", "false");
+		        	messages.put("success", "Failed to delete.");
+		        	messages.put("disableSubmit", "true");
 		        }
 	        } catch (SQLException e) {
 				e.printStackTrace();
