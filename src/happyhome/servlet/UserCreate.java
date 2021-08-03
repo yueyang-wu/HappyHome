@@ -51,16 +51,20 @@ public class UserCreate extends HttpServlet {
         	String lastName = req.getParameter("lastname");
         	String email = req.getParameter("email");
         	String providedZip = req.getParameter("currentzip");
-        	
         	Integer currentZip = null;
         	if (providedZip != "") {
         		currentZip = Integer.parseInt(providedZip);
         	}
-        	
+
         	try {
-        		User user = new User(userName, password, firstName, lastName, email, currentZip);
-        		user = userDao.create(user);
-        		messages.put("success", "Successfully created " + userName + "!");
+        		User existingUser = userDao.getUserByUserName(userName);
+        		if (existingUser != null) {
+        			messages.put("success", "The username " + userName + " is already taken.");
+        		} else {
+        			User user = new User(userName, password, firstName, lastName, email, currentZip);
+            		user = userDao.create(user);
+            		messages.put("success", "Successfully created " + userName + "!");
+        		}
 	        } catch (SQLException e) {
 				e.printStackTrace();
 				throw new IOException(e);

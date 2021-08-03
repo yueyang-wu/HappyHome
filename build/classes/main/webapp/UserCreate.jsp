@@ -26,13 +26,13 @@
 					<div class="row g-2 justify-content-md-center">
 						<div class="col-md-6">
 					    	<div class="form-floating">
-					      		<input type="text" class="form-control" id="username" name="username" required>
+					      		<input type="text" class="form-control" id="username" name="username" value="${fn:escapeXml(param.username)}" required>
 					      		<label for="username">Username</label>
 					    	</div>
 					  	</div>
 					  	<div class="col-md-6">
 					    	<div class="form-floating">
-					      		<input type="text" class="form-control" id="password" name="password" required>
+					      		<input type="text" class="form-control" id="password" name="password" value="${fn:escapeXml(param.password)}" required>
 					      		<label for="password">Password</label>
 					    	</div>
 					  	</div>
@@ -42,13 +42,13 @@
 					<div class="row g-2 justify-content-md-center">
 						<div class="col-md-6">
 					    	<div class="form-floating">
-					      		<input type="text" class="form-control" id="firstname" name="firstname" required>
+					      		<input type="text" class="form-control" id="firstname" name="firstname" value="${fn:escapeXml(param.firstname)}" required>
 					      		<label for="firstname">First Name</label>
 					    	</div>
 					  	</div>
 					  	<div class="col-md-6">
 					    	<div class="form-floating">
-					      		<input type="text" class="form-control" id="lastname" name="lastname" required>
+					      		<input type="text" class="form-control" id="lastname" name="lastname" value="${fn:escapeXml(param.lastname)}" required>
 					      		<label for="lastname">Last Name</label>
 					    	</div>
 					  	</div>
@@ -58,13 +58,13 @@
 					<div class="row g-2 justify-content-md-center">
 						<div class="col-md-6">
 					    	<div class="form-floating">
-					      		<input type="text" class="form-control" id="email" name="email" required>
+					      		<input type="text" class="form-control" id="email" name="email" value="${fn:escapeXml(param.email)}" required>
 					      		<label for="email">Email</label>
 					    	</div>
 					  	</div>
 					  	<div class="col-md-6">
 					    	<div class="form-floating">
-					      		<input type="text" class="form-control" id="currentzip" name="currentzip">
+					      		<input type="text" class="form-control" id="currentzip" name="currentzip" value="${fn:escapeXml(param.currentzip)}">
 					      		<label for="currentzip">Current ZIP Code</label>
 					    	</div>
 					  	</div>
