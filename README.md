@@ -18,13 +18,13 @@ Javascript | JSP | CSS | Java | MySQL | Tomcat
 - video: 
 
 ### Home Page
-https://drive.google.com/uc?export=view&id=1viUe706MMm_MJZQ4aQHcp4tz8CnPn7yM
+![Home Page](https://drive.google.com/uc?export=view&id=1viUe706MMm_MJZQ4aQHcp4tz8CnPn7yM)
 ### Disaster & County Info
-https://drive.google.com/uc?export=view&id=1Uvyfo55YoQ4hOSP8YQIe2FGzD4DN3t_5
+![Info Display](https://drive.google.com/uc?export=view&id=1Uvyfo55YoQ4hOSP8YQIe2FGzD4DN3t_5)
 ### Create A User
-https://drive.google.com/uc?export=view&id=1o6Q12eeFmCvb-SCrXvMCIX348F4jq3Dg
+![Create User](https://drive.google.com/uc?export=view&id=1o6Q12eeFmCvb-SCrXvMCIX348F4jq3Dg)
 ### User Page
-https://drive.google.com/uc?export=view&id=1DvnamadMxQ7dUfg2OXkmO98oq35Ny5PJ
+![User Page](https://drive.google.com/uc?export=view&id=1DvnamadMxQ7dUfg2OXkmO98oq35Ny5PJ)
 
 ## Run the App Locally
 - prerequisites
