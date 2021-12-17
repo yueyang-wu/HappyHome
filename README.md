@@ -15,7 +15,7 @@ Javascript | JSP | CSS | Java | MySQL | Tomcat
   - add a county to their favorite list
 
 ## Demo
-- video: 
+- video: https://youtu.be/xkGV4AXSMQc
 
 ### Home Page
 ![Home Page](https://drive.google.com/uc?export=view&id=1viUe706MMm_MJZQ4aQHcp4tz8CnPn7yM)
